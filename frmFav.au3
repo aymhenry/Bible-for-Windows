@@ -106,7 +106,7 @@ Func cmdFavManag_Click ()
 				EndIf
 ;==========
 				;IniDelItem ( $item, $strSec, $lstFav)
-				if 1= IniDelete ( $strFavINI, Uni2Hex ($data2), $item) Then
+				if 1= IniDelete ( $strFavINI, Uni2Hex ($data2)) Then
 					_GUICtrlListView_DeleteItemsSelected ($lstFav)
 				EndIf
 

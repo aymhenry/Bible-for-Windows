@@ -35,7 +35,7 @@
 	#AutoIt3Wrapper_Res_Description=كتاب لكل العصور             ;Description field
 	;#AutoIt3Wrapper_Res_Description=كتاب لكل العصور - نسخة تجريبة فقط-وليست للتوزيع
 
-	#AutoIt3Wrapper_Res_Fileversion=2.1                ;File Version
+	#AutoIt3Wrapper_Res_Fileversion=2.0                ;File Version
 	#AutoIt3Wrapper_Res_Field=Product Name| الكتاب المقدس بالتشكيل و البحث - الشواهد - التفسير التطبيقى للكتاب - قاموس الكتاب
 
 	;#AutoIt3Wrapper_Res_FileVersion_AutoIncrement=  ;(Y/N/P) AutoIncrement FileVersion After Aut2EXE is finished. default=N
@@ -61,27 +61,28 @@
 	;#AutoIt3Wrapper_Res_Field=Name|Value            ;Free format fieldname|fieldvalue
 ;===============================================================================================================
 ; Add extra ICO files to the resources which can be used with TraySetIcon(@ScriptFullPath, 3) etc
-; list of filename of the Ico files to be added, First one will have number 5, then 6 ..etc
+; If no ResNumber is specified, the added icons are numbered from 201 up
 
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\1-icoBible.ico	;4
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\2-icoShahed.ico	;5
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\3-icoSave.ico	;6
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\4-icoPrint.ico	;7
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\5-IcoSearch.ico	;8
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\6-icoTash.ico	;9
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\7-icoCont.ico	;10
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\8-icoNumber.ico	;11
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\9-Tafser.ico		;12
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\1-icoBible.ico;4  ; Filename[,ResNumber[,LanguageCode]] of ICO to be added.
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\2-icoShahed.ico; 5
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\3-icoSave.ico;6
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\4-icoPrint.ico;7
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\5-IcoSearch.ico;8
 
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\6-icoTash.ico;9
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\7-icoCont.ico;10
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\8-icoNumber.ico;11
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\9-icoTafser.ico;12
 	#AutoIt3Wrapper_Res_Icon_Add=ICONs\10-icoAddress.ico;13
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\11-icoKamos.ico;14
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\12-icoNext.ico	;15
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\13-icoPrev.ico	;16
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\14-icoMap.ico	;17
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\15-icoCopy.ico	;18
 
-	#AutoIt3Wrapper_Res_Icon_Add=ICONs\16-icoChkUpdate.ico	;19
-	;#AutoIt3Wrapper_Res_Icon_Add=ICONs\17-Protect.ico	;20
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\11-icoKamos.ico;14
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\12-icoNext.ico;15
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\13-icoPrev.ico;16
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\14-icoMap.ico;17
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\15-icoCopy.ico;18
+
+	#AutoIt3Wrapper_Res_Icon_Add=ICONs\16-icoChkUpdate.ico;19
+	;#AutoIt3Wrapper_Res_Icon_Add=ICONs\17-Protect.ico;20
 
 	;#AutoIt3Wrapper_Res_Icon_Add=ico2.ico                  ; Filename of ICO to be added.
 	;#AutoIt3Wrapper_Res_Icon_Add=ico3.ico                  ; Filename of ICO to be added.

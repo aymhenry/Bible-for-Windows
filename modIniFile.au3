@@ -79,6 +79,7 @@
 ;--=========== Variables Values  ==============
 		Global $as_SysFont [ Ubound ($as_DefalutFont)]
 		Global $as_BKColor [3 ]
+		Global $strSearch_txt
 
 ;--=========== Section Names
 		;---=========== Display         =============== to be removed later

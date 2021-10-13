@@ -1,9 +1,4 @@
-;-============ Constants to Read From Def. Strings =====
-		Global Const $conPosSize = 1		; ReadDefVal ($conDefBible1Font, $conPosSize)
-		Global Const $conPosFColor = 5		; ReadDefVal ($conDefBible1Font, $conPosFColor)
-		Global Const $conPosBColor = 12		; ReadDefVal ($conDefBible1Font, $conPosBColor)
-		Global Const $conPosAttr = 19		; ReadDefVal ($conDefBible1Font, $conPosAttr)
-		Global Const $conPosFName = 24		; ReadDefVal ($conDefBible1Font, $conPosFName)
+
 
 ;--=========== Func to read data----------------------------------------------------------
 	; example ReadDefVal ( $conDefBible1Font, $conPosFColor)

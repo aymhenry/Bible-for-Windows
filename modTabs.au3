@@ -1,21 +1,7 @@
 
-;--========= Array to Hold Tah info
-Global Const $pconMaxTabs = 50
-Global $a_hTabObject [$pconMaxTabs + 1];[1] ; CloseTab_Step2 has to be fixed if two dim
 
-Global $a_hTabIDs [2] ; only 2
 
-; for tabs
-Global $plng_BibleDef = 0			; Bible default TAB
-Global $plng_SearchDef = 1			; Search default TAB
 
-Global $plng_CurrTabNo = 0			; Curr tab
-Global $plng_CreatedTabs = -1				; total created tabs
-Global $plng_SettingTabs = -1				; total created tabs
-;-------------------------------------------------------------------------
-
-Global $conTab_TypeBible = "B"	; only one char to change ;check modIniFile:Txt2Setting
-Global $conTab_TypeSearch ="S"
 ;Global $conTab_TypeBlank = "N"
 
 ;Const $conTab_NO = 0

@@ -78,15 +78,6 @@ Func Uni2Hex ( $strText) ; -1 Uni2Hex ,  1 Hex2UniCode
 	Return $strRet
 EndFunc
 
-;---------------------------------------------------------------------------------------------------------------------------
-Func ChrTach ($strASC)
-	Local $nCnt, $strChrs
-	for $nCnt = 1 to Stringlen($strASC) step 3
-		$strChrs = $strChrs & Chrw(Dec( "006" &   StringMid($strASC, $nCnt ,2)  ) )
-
-	Next
-	Return $strChrs
-EndFunc
 
 ;---------------------------------------------------------------------------------------------------------------------------
 Func TextComb ($strText, $strTach)

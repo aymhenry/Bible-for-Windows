@@ -36,12 +36,13 @@
 
 ;-----------------------------------------------------------Program-----------------------------------------------------------
 	#Include <libColorPicker_Aym.au3>
-	#Include <libWinAPIEx.au3>
-	#include <libIE_Aym.au3>	;#include <IE.au3> ; for error trap
+	#Include <WinAPIEx.au3>  ;#Include <libWinAPIEx.au3>
+	#include <IE.au3>	;#include <IE.au3> ; for error trap
 
 	#include <modGlobal.au3>
-	#include <modStyles.au3>
 	#include <modIniFile.au3>
+	#include <modStyles.au3>
+
 	#include <modErrorTrap.au3>
 	#include <modAccess.au3>
 	#include <modStringTools.au3>

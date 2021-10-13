@@ -1,5 +1,8 @@
 #Include-once
 
+Global Const $conRevNum  = "2.01A"
+Global Const $conRevDate = "يناير 2011"
+Global Const $conRevInfo = "الاصدار الثانى"
 ;---------------------------------------------------------------------------------------------------------------------------
 Func cmdCpyWrt_Click ()
 	if _WinAPI_GetForegroundWindow() <> $frmMainForm then
@@ -137,15 +140,16 @@ Func cmdCpyWrt_Click ()
 
 			Case $msg[0] = $itmAut_New
 				GUICtrlSetData ($lblAbout, _
-										Num2India (1) & "-" & "تم إضافة التشكيل الى الاسفار القانونية الثانية." & @CRLF & _
-										Num2India (2) & "-" & "إضافة عناوين فرعية لموضوعات الانجيل." &  @CRLF & _
-										Num2India (3) & "-" & "تحسين كفائة و سرعة البحث." & @CRLF & _
-										Num2India (4) & "-" & "الوصول الى الاية بواسطة الاسم المختصر." & @CRLF & _
-										Num2India (5) & "-" & "تحسين شكل الايقونات و القوائم." & @CRLF & _
-										Num2India (6) & "-" & "الاتصال بالانترنت لتحديث البرنامج." & @CRLF & _
-										Num2India (7) & "-" & "وضع روابط التحميل." & @CRLF & _
-										Num2India (8) & "-" & "غلق شريط التبويب بنقرة واحدة." & @CRLF & _
-										Num2India (9) & "-" & "تعديلات اخرى." )
+										Num2India (1) & "-" & "تعديل روابط تحميل البؤنامج" & @CRLF & _
+										Num2India (2) & "-" & "تم إضافة التشكيل الى الاسفار القانونية الثانية." & @CRLF & _
+										Num2India (3) & "-" & "إضافة عناوين فرعية لموضوعات الانجيل." &  @CRLF & _
+										Num2India (4) & "-" & "تحسين كفائة و سرعة البحث." & @CRLF & _
+										Num2India (5) & "-" & "الوصول الى الاية بواسطة الاسم المختصر." & @CRLF & _
+										Num2India (6) & "-" & "تحسين شكل الايقونات و القوائم." & @CRLF & _
+										Num2India (7) & "-" & "الاتصال بالانترنت لتحديث البرنامج." & @CRLF & _
+										Num2India (8) & "-" & "وضع روابط التحميل." & @CRLF & _
+										Num2India (9) & "-" & "غلق شريط التبويب بنقرة واحدة." & @CRLF & _
+										Num2India (10) & "-" & "تعديلات اخرى." )
 
 			Case $msg[0] = $itmAut_Rev
 				GUICtrlSetData ($lblAbout, "اسم البرنامج: " & @Cr & _

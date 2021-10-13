@@ -1,7 +1,10 @@
 Global $hToolbar
+;Global $strExeName = StringReplace (@ScriptFullPath, ".au3", ".exe")
+Global $strExeName = @ScriptDir & "\Bible.exe"
 
 Dim $iMemo
 ;Dim $iItem ; Command identifier of the button associated with the notification.
+	Local $strCurrentColor = _WinAPI_GetSysColor($COLOR_MENU)
 
 	Global $hStatus, $hMain
 	Global Const $mnc2SubMenu2Start = 2000
@@ -26,30 +29,18 @@ Dim $iMemo
 	Global Enum $idFileBible    = 1000, $idFileMap, $idFileSaveAs, $idFilePrint,$idFileSort, $idFileClose, $idFileExit , _
 				$idEditSelectAll, 		     $idEditUnSelect,   $idEditCopy,  $idEditSearch, $idEditKamos, _
 				$idViewFont,  $idViewNum,    $idViewCount,      $idViewTach,  $idViewAya,    $idViewAdd,  $idViewGoto, $idViewPrev, $idViewNext, $idViewShahd, $idViewDef, _
-				$idFavAdd, 	  $idFavManag, _
-				$idHelpOfcPage,$idHelpWrtComment, $idHelpChkUpdate, $idHelpPage,	$idHelpLoadPage,  $idHelpKamosPage,  $idHelpAbout
+				$idFavAdd, 	  $idFavManag, $idAndroid, _
+				$idHelpOfcPage,$idHelpWrtComment, $idFacebookLink, $idHelpPage,	$idHelpLoadPage,  $idHelpKamosPage,  $idHelpAbout
 
 	Global $hFile, $hView
 	;---
 	Const $lng_NoToolbar = 14
 	Const $lngICOSize = 16+8
 
-	Const $icoID_Bible = 4
-	Const $icoID_SaveAs = 6
-	Const $icoID_Print = 7
-	Const $icoID_Search = 8
-	Const $icoID_Kamos = 14
-	Const $icoID_Address = 13
-	Const $icoID_Count = 10
-	Const $icoID_Num = 11
-	Const $icoID_Tach = 9
-	Const $icoID_Aya = 12
-	Const $icoID_Shahd = 5
-	Const $icoID_Prev = 15
-	Const $icoID_Next = 16
-	Const $icoID_Map = 17
-	Const $icoID_Copy = 18
-	Const $icoID_ChkUpdate = 19
+	Global Enum $icoID_Bible = 4, $icoID_Shahd, $icoID_SaveAs, $icoID_Print, $icoID_Search, _
+                $icoID_Tach, $icoID_Count, $icoID_Num, $icoID_Aya, $icoID_Address, _
+                $icoID_Kamos, $icoID_Prev, $icoID_Next, $icoID_Map, $icoID_Copy, _
+                $icoID_ChkUpdate
 	;Const $icoID_Protect = 20
 ;---------------------------------------------------------------------------------------------------------------------------
 Func MainMenu(ByRef $hGUI)
@@ -106,28 +97,29 @@ Func MainMenu(ByRef $hGUI)
 	_GUICtrlMenu_InsertMenuItem ($hView,14, "الاعدادات الافتراضية"	, $idViewDef)
 
 	; Create Fav menu
-	$hFav = _GUICtrlMenu_CreateMenu (1)
+	$hFav = _GUICtrlMenu_CreateMenu ()
 	_GUICtrlMenu_InsertMenuItem ($hFav, 0,"إضافة للمفضلات"		    , $idFavAdd)
 	_GUICtrlMenu_InsertMenuItem ($hFav, 1,"تنظيم  المفضلات"		    , $idFavManag)
 
 	; Create Help menu
-	$hHelp = _GUICtrlMenu_CreateMenu (1)
+	$hHelp = _GUICtrlMenu_CreateMenu ()
 	;_GUICtrlMenu_InsertMenuItem ($hHelp, 0,"خريطة الكتاب" 		    , $idFileMap )
 	;_GUICtrlMenu_InsertMenuItem ($hHelp, 1,""		    , 0 )
 	_GUICtrlMenu_InsertMenuItem ($hHelp, 0,"الموقع الرسمى للبرنامج"    , $idHelpOfcPage)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 1,"إرسال إقتراح-تبليغ عن خطأ", $idHelpWrtComment)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 2,"اختبار وجود إصدار احدث من البرنامج",   $idHelpChkUpdate)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 3,""		    , 0 )
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 4,"رابط تحميل ملف المساعدة"  , $idHelpPage)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 5,"رابط تحميل البرنامج"  	, $idHelpLoadPage)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 6,"رابط تحميل برنامج قاموس الكتاب"  	, $idHelpKamosPage)
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 7,""		    , 0 )
-	_GUICtrlMenu_InsertMenuItem ($hHelp, 8,"عن البرنامج"			  	, $idHelpAbout)
+	;_GUICtrlMenu_InsertMenuItem ($hHelp, 1,"إرسال إقتراح-تبليغ عن خطأ", $idHelpWrtComment)
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 2,"نسخة البرنامج اندرويد", $idAndroid)
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 3,"رابط لصفحة الفيس-بوك للبرنامج", $idFacebookLink)
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 4,""		    , 0 )
+	;_GUICtrlMenu_InsertMenuItem ($hHelp, 5,"رابط تحميل ملف المساعدة"  , $idHelpPage)
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 6,"رابط تحميل البرنامج"  	, $idHelpLoadPage)
+	;_GUICtrlMenu_InsertMenuItem ($hHelp, 7,"رابط تحميل برنامج قاموس الكتاب"  	, $idHelpKamosPage)
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 8,""		    , 0 )
+	_GUICtrlMenu_InsertMenuItem ($hHelp, 9,"عن البرنامج"			  	, $idHelpAbout)
 	;--------
 	;_GUICtrlMenu_InsertMenuItem ($idView_SubMenu, 0, "&ملف" 	, 0, $idView_SubMenu)
 	;------
 	; Create Main menu
-	$hMain = _GUICtrlMenu_CreateMenu (1)
+	$hMain = _GUICtrlMenu_CreateMenu ()
 	_GUICtrlMenu_InsertMenuItem ($hMain, 0, "&ملف" 	, 0, $hFile)
 	_GUICtrlMenu_InsertMenuItem ($hMain, 1, "ت&حرير", 0, $hEdit)
 	_GUICtrlMenu_InsertMenuItem ($hMain, 2, "&عرض"  , 0, $hView)
@@ -139,41 +131,45 @@ Func MainMenu(ByRef $hGUI)
 
 	; ---------------------------------------------
 
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileBible, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Bible, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileMap,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Map, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileSaveAs,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_SaveAs, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFilePrint, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Print, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileClose,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 131, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileExit,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 27, $lngICOSize, $lngICOSize), false)
+	;_GUICtrlMenu_SetItemBmp ( $hFile, 0, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $strExeName, $icoID_Bible, $lngICOSize, $lngICOSize), false)
+    ; Set New menu item to have a bitmap
+    _GUICtrlMenu_SetItemBmp($hFile, 0, _WinAPI_Create32BitHBITMAP (4))
 
-	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditCopy,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Copy, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditSearch,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Search, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditKamos,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),  $gstrExeFile, $icoID_Kamos, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileBible,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Bible, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileMap,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Map, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileSaveAs,_CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_SaveAs, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFilePrint, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Print, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileClose,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 131, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFile, $idFileExit,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 27, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewFont,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 73, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewAdd,   _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Address, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewCount, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Count, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewNum,   _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Num, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewTach,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Tach, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewAya,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),  $gstrExeFile, $icoID_Aya, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditCopy,_CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Copy, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditSearch,_CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Search, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hEdit, $idEditKamos,_CreateBitmapFromIcon($strCurrentColor,  $strExeName, $icoID_Kamos, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewPrev,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Prev, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewNext,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Next, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewFont,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 73, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewAdd,   _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Address, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewCount, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Count, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewNum,   _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Num, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewTach,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Tach, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewAya,  _CreateBitmapFromIcon($strCurrentColor,  $strExeName, $icoID_Aya, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hView, $idViewShahd,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),$gstrExeFile, $icoID_Shahd, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewPrev,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Prev, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewNext,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Next, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hFav, $idFavAdd,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 43, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hView, $idViewShahd,  _CreateBitmapFromIcon($strCurrentColor,$strExeName, $icoID_Shahd, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hHelp, $idHelpPage,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 154, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hHelp, $idHelpChkUpdate,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_ChkUpdate, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hFav, $idFavAdd,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 43, $lngICOSize, $lngICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hHelp, $idHelpAbout,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, 0, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hHelp, $idHelpPage,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 154, $lngICOSize, $lngICOSize), false)
+	;_GUICtrlMenu_SetItemBmp ( $hHelp, $$idFacebookLink,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_ChkUpdate, $lngICOSize, $lngICOSize), false)
+
+	_GUICtrlMenu_SetItemBmp ( $hHelp, $idHelpAbout,  _CreateBitmapFromIcon($strCurrentColor, $strExeName, 0, $lngICOSize, $lngICOSize), false)
 
 	; ---------------------------------------------
 	; Adjust Setting ==============================
 	if CurAdd()= 0 then
 		$bStatAdd = $TBSTATE_CHECKED
-;msgbox (0,0,$bStatAdd)
+		;msgbox (0,0,$bStatAdd)
 		;GUICtrlSetState($idViewAdd, $GUI_CHECKED)
 		_GUICtrlMenu_SetItemChecked  ($hView, $idViewAdd, True, False)
 	Else
@@ -293,14 +289,14 @@ Func WM_CONTEXTMENU1 ($iwParam, $bDisMenu)
 
 		_GUICtrlMenu_SetItemDisabled($hMenu, 0, $bDisMenu)
 ;----
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileClose,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 131, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileBible, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Bible,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileClose,  _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 131, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileBible, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Bible,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
 
-	;_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FavAdd,    _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), @SystemDir & '\shell32.dll', 43, $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileMap, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Map,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	;_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FavAdd,    _CreateBitmapFromIcon($strCurrentColor, @SystemDir & '\shell32.dll', 43, $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_FileMap, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Map,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_ViewPrev, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Prev,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_ViewNext, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Next,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_ViewPrev, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Prev,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mnc_ViewNext, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Next,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
 ;---
 	_GUICtrlMenu_TrackPopupMenu ($hMenu, $iwParam)
 	_GUICtrlMenu_DestroyMenu ($hMenu)
@@ -355,16 +351,16 @@ Func WM_CONTEXTMENU2 ($iwParam)
 	_GUICtrlMenu_InsertMenuItem ($hMenu, 10, "حفظ بأسـم", 		 $mn2_FileSaveAs)
 
 ;---
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditSearch,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Search, $lngSC_ICOSize,  $lngSC_ICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditKamos,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),  $gstrExeFile, $icoID_Kamos,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewShahd,  _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),$gstrExeFile, $icoID_Shahd,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditCopy,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU),   $gstrExeFile, $icoID_Copy,   $lngICOSize, $lngICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_FileSaveAs,_CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_SaveAs, $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditSearch,_CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Search, $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditKamos,_CreateBitmapFromIcon($strCurrentColor,  $strExeName, $icoID_Kamos,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewShahd,  _CreateBitmapFromIcon($strCurrentColor,$strExeName, $icoID_Shahd,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_EditCopy,_CreateBitmapFromIcon($strCurrentColor,   $strExeName, $icoID_Copy,   $lngICOSize, $lngICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_FileSaveAs,_CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_SaveAs, $lngSC_ICOSize,  $lngSC_ICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewPrev, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Prev,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewNext, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Next,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewPrev, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Prev,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_ViewNext, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Next,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
 
-	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_SubMenu1, _CreateBitmapFromIcon(_WinAPI_GetSysColor($COLOR_MENU), $gstrExeFile, $icoID_Aya,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
+	_GUICtrlMenu_SetItemBmp ( $hMenu, $mn2_SubMenu1, _CreateBitmapFromIcon($strCurrentColor, $strExeName, $icoID_Aya,  $lngSC_ICOSize,  $lngSC_ICOSize), false)
 
 ;---
 	_GUICtrlMenu_TrackPopupMenu ($hMenu, $iwParam)
@@ -409,7 +405,7 @@ Func CopyBibleText ()
 
 		_IEAction ($oIESearch, "copy")
 		$strClip = ClipGet()
-		if $strClip = "" and Then
+		if $strClip = "" Then
 			_IEAction ($oIESearch, "selectall")
 			_IEAction ($oIESearch, "copy")
 			_IEAction ($oIESearch, "unselect")
@@ -551,18 +547,19 @@ Func Toolbar( $bStatNum, $bStatTash, $bStatAya, $bStatCont, $bStatAdd)
 	Const $conFixedHight = 66
 	Local $hGUI
 	Local $aStrings[14]
+	Local $booStatus
 
 	$hToolbar = _GUICtrlToolbar_Create ($frmMainForm)
 	_GUICtrlToolbar_SetUnicodeFormat ( $hToolbar, True)
 	_GUICtrlToolbar_SetBitmapSize($hToolbar, 32, 32)
 
-	Local $iIconCnt = _WinAPI_ExtractIconEx ($gstrExeFile, -1, 0, 0, 1) ; Get count
+	Local $iIconCnt = _WinAPI_ExtractIconEx ($strExeName, -1, 0, 0, 1) ; Get count
 	Local $hNormal = _GUIImageList_Create(32, 32, 5, 1)
 	;Local $hNormal = _GUIImageList_Create(40, 40, 6, 1)
 	Local $iIconIndex, $i
 
     For $i = 0 To $iIconCnt - 1
-        $iIconIndex = _GUIImageList_AddIcon($hNormal, $gstrExeFile, $i, True)
+        $iIconIndex = _GUIImageList_AddIcon($hNormal, $strExeName, $i, True)
     Next
 
     _GUICtrlToolbar_SetImageList($hToolbar, $hNormal)
@@ -597,7 +594,7 @@ Func Toolbar( $bStatNum, $bStatTash, $bStatAya, $bStatCont, $bStatAdd)
 
 	; Add buttons
 
-	_GUICtrlToolbar_AddButton ($hToolbar, $idTB_FileBible,  $icoID_Bible, $aStrings[0] );  	15
+	_GUICtrlToolbar_AddButton ($hToolbar, $idTB_FileBible,  $icoID_Bible, $aStrings[0] )
 	_GUICtrlToolbar_AddButton ($hToolbar, $idTB_FileMap,    $icoID_Map,	  $aStrings[13] );  	15
 	_GUICtrlToolbar_AddButtonSep ($hToolbar)
 
@@ -621,8 +618,16 @@ Func Toolbar( $bStatNum, $bStatTash, $bStatAya, $bStatCont, $bStatAdd)
 	_GUICtrlToolbar_AddButton ($hToolbar, $idTB_ViewPrev, $icoID_Prev,  $aStrings[11] )
 	_GUICtrlToolbar_AddButton ($hToolbar, $idTB_ViewNext, $icoID_Next,  $aStrings[12] )
 	;-------------
-	_GUICtrlToolbar_EnableButton($hToolbar, $idTB_ViewCount, _Iif($bStatAya = 0, True, false) )
-	_GUICtrlToolbar_EnableButton($hToolbar, $idTB_ViewAdd,   _Iif($bStatAya = 0, True, false) )
+
+
+	if $bStatAya = 0 Then
+		$booStatus = True
+	Else
+		$booStatus = False
+	EndIf
+
+	_GUICtrlToolbar_EnableButton($hToolbar, $idTB_ViewCount, $booStatus )
+	_GUICtrlToolbar_EnableButton($hToolbar, $idTB_ViewAdd,  $booStatus )
 
 	_GUICtrlToolbar_SetButtonSize($hToolbar, $conFixedHight,  GetToolbarWidth () )
 
@@ -744,7 +749,7 @@ EndFunc   ;==>_WM_NOTIFY
 Func SetupTray  ()
 	Local $string
 
-	TraySetIcon ($gstrExeFile, -1); bible.ico -3, -4
+	TraySetIcon ($strExeName, -1); bible.ico -3, -4
 
 			$tryViewCont    = TrayCreateItem("نص مستمر" )
 					TrayItemSetOnEvent ($tryViewCont, "DispSwapCont")
@@ -802,18 +807,26 @@ EndFunc
 
 ;---------------------------------------------------------------------------------------------------------------------------
 Func _CreateBitmapFromIcon($iBackground, $sIcon, $iIndex, $iWidth, $iHeight)
-
     Local $hDC, $hBackDC, $hBackSv, $hIcon, $hBitmap
 
     $hDC = _WinAPI_GetDC(0)
     $hBackDC = _WinAPI_CreateCompatibleDC($hDC)
     $hBitmap = _WinAPI_CreateSolidBitmap(0, $iBackground, $iWidth, $iHeight)
+
     $hBackSv = _WinAPI_SelectObject($hBackDC, $hBitmap)
+
     $hIcon = _WinAPI_PrivateExtractIcon2($sIcon, $iIndex, $iWidth, $iHeight)
     If Not @error Then
+		;MsgBox (0,"test ", $hBitmap)
+
         _WinAPI_DrawIconEx($hBackDC, 0, 0, $hIcon, 0, 0, 0, 0, $DI_NORMAL)
-        _WinAPI_DestroyIcon($hIcon)
+    ;    _WinAPI_DestroyIcon($hIcon)
+	;Else
+		;MsgBox (0,"error ",$sIcon)
     EndIf
+
+	_WinAPI_DestroyIcon($hIcon)
+
     _WinAPI_SelectObject($hBackDC, $hBackSv)
     _WinAPI_ReleaseDC(0, $hDC)
     _WinAPI_DeleteDC($hBackDC)
@@ -823,15 +836,26 @@ EndFunc   ;==>_CreateBitmapFromIcon
 Func _WinAPI_PrivateExtractIcon2($sIcon, $iIndex, $iWidth, $iHeight)
 
     Local $hIcon, $tIcon = DllStructCreate('hwnd'), $tID = DllStructCreate('hwnd')
-    Local $Ret = DllCall('user32.dll', 'int', 'PrivateExtractIcons', 'str', $sIcon, 'int', $iIndex, 'int', $iWidth, 'int', $iHeight, 'ptr', DllStructGetPtr($tIcon), 'ptr', DllStructGetPtr($tID), 'int', 1, 'int', 0)
+    Local $Ret = DllCall('user32.dll', 'int', 'PrivateExtractIcons', _
+									   'str', $sIcon, _
+									   'int', $iIndex, _
+									   'int', $iWidth, _
+									   'int', $iHeight, _
+									   'ptr', DllStructGetPtr($tIcon), _
+									   'ptr', DllStructGetPtr($tID), 'int', 1, 'int', 0)
+
 
     If (@error) Or ($Ret[0] = 0) Then
+        MsgBox (0,"Error01 $sIcon= ",$sIcon)
         Return SetError(1, 0, 0)
     EndIf
+
     $hIcon = DllStructGetData($tIcon, 1)
     If ($hIcon = Ptr(0)) Or (Not IsPtr($hIcon)) Then
+		;MsgBox (0,"Error02 $sIcon= ",$sIcon)
         Return SetError(1, 0, 0)
     EndIf
+
     Return $hIcon
 EndFunc   ;==>_WinAPI_PrivateExtractIcon
 
@@ -955,10 +979,12 @@ Func MenuCOMMAND($lngCommand)
         ; - Help Menu -----------------------------------
             Case $idHelpOfcPage
                     cmdOfcPage_Start ()
-			Case $idHelpChkUpdate
-					cmdChkUpdate_Start ()
-			Case $idHelpWrtComment
-					cmdWrtComment_Start ()
+			Case $idFacebookLink
+					cmdFacebook_Start ()
+
+			Case $idAndroid
+					cmdAndroid_Start ()
+
             Case $idHelpPage
                     cmdHelpPage_Start ()
             Case $idHelpLoadPage
@@ -1015,7 +1041,7 @@ Func SetupStatus ()
 	;Local $aText[2] = ["" & @TAB, $conStatusMain]
 	;Local $aParts[2] = [200, 200 + 400 ]
 
-	;ConsoleWrite ($gstrExeFile & @cr)
+	;ConsoleWrite ($strExeName & @cr)
 	Local $aText[7] = ["", "", "", "", "", $conStatusMain, ""]
 	Local $aParts[7] = [30,60,90,120,150, 420, 650 ]
 
@@ -1043,11 +1069,11 @@ Func SetStatusICONs ()
 
 	;_GUICtrlStatusBar_SetMinHeight($hStatus, 30)
 
-	_GUICtrlStatusBar_SetIcon ($hStatus, 0, $bStatTash, $gstrExeFile)
-	_GUICtrlStatusBar_SetIcon ($hStatus, 1, $bStatCont, $gstrExeFile)
-	_GUICtrlStatusBar_SetIcon ($hStatus, 2, $bStatNum, $gstrExeFile)
-	_GUICtrlStatusBar_SetIcon ($hStatus, 3, $bStatAya, $gstrExeFile)
-	_GUICtrlStatusBar_SetIcon ($hStatus, 4, $bStatAdd, $gstrExeFile)
+	_GUICtrlStatusBar_SetIcon ($hStatus, 0, $bStatTash, $strExeName)
+	_GUICtrlStatusBar_SetIcon ($hStatus, 1, $bStatCont, $strExeName)
+	_GUICtrlStatusBar_SetIcon ($hStatus, 2, $bStatNum, $strExeName)
+	_GUICtrlStatusBar_SetIcon ($hStatus, 3, $bStatAya, $strExeName)
+	_GUICtrlStatusBar_SetIcon ($hStatus, 4, $bStatAdd, $strExeName)
 
 	if $bStatTash 	<> -1  Then
 		_GUICtrlStatusBar_SetTipText($hStatus, 0, "التشكيل فعال")

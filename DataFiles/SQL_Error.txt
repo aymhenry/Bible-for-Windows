@@ -1,0 +1,18 @@
+---------------------------
+SQL Final
+---------------------------
+SELECT tblBible.* FROM tblBible   Where  bibText Like '*[¬√≈«][∆ÌÏ]„‰*'  ORDER BY bibBibleCode, bibChptrNo, bibSectionNo, bibSectionSubNo;
+---------------------------
+OK   
+---------------------------
+---------------------------
+SQL Final
+---------------------------
+
+SELECT tblBible.* FROM tblBible   Where  bibBibleCode = 4 And  bibText Like '*[¬√≈«][∆ÌÏ]„‰*'  ORDER BY bibBibleCode, bibChptrNo, bibSectionNo, bibSectionSubNo;
+---------------------------
+OK   
+---------------------------
+Like '*[¬,√,≈,«][∆,Ì,Ï]„‰*'
+
+Like '*∆ *'

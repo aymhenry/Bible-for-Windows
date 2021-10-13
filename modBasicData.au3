@@ -1,6 +1,4 @@
-;--========== Basic Data Holder
-Global $cmbBible
-Global $avArray[75], $cBibleChpts, $acShort[75] ; $acBible[75],
+
 
 ;CreateArray ()
 

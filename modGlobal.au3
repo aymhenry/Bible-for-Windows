@@ -1,6 +1,42 @@
 ;====================================================
 ;================= Global Constant =================
 #include-once
+; main form
+Global $frmMainForm
+
+;-- basic data
+;--========== Basic Data Holder
+Global $cmbBible
+Global $avArray[75], $cBibleChpts, $acShort[75] ; $acBible[75],
+
+; --modTabs
+;--========= Array to Hold Tah info
+Global $lngExtraFormOpen
+Global Const $pconMaxTabs = 50
+Global $a_hTabObject [$pconMaxTabs + 1];[1] ; CloseTab_Step2 has to be fixed if two dim
+
+Global $a_hTabIDs [2] ; only 2
+
+; for tabs
+Global $plng_BibleDef = 0			; Bible default TAB
+Global $plng_SearchDef = 1			; Search default TAB
+
+Global $plng_CurrTabNo = 0			; Curr tab
+Global $plng_CreatedTabs = -1				; total created tabs
+Global $plng_SettingTabs = -1				; total created tabs
+
+
+Global $conTab_TypeBible = "B"	; only one char to change ;check modIniFile:Txt2Setting
+Global $conTab_TypeSearch ="S"
+
+; ---- modStyles
+;-============ Constants to Read From Def. Strings =====
+		Global Const $conPosSize = 1		; ReadDefVal ($conDefBible1Font, $conPosSize)
+		Global Const $conPosFColor = 5		; ReadDefVal ($conDefBible1Font, $conPosFColor)
+		Global Const $conPosBColor = 12		; ReadDefVal ($conDefBible1Font, $conPosBColor)
+		Global Const $conPosAttr = 19		; ReadDefVal ($conDefBible1Font, $conPosAttr)
+		Global Const $conPosFName = 24		; ReadDefVal ($conDefBible1Font, $conPosFName)
+
 
 ;--========= Main Form Data
 Global Const $conRemove = "51-4E-4B-4F-4C-50-4D-52"
@@ -27,7 +63,7 @@ Global $oIE, $oIESearch
 Global $hTab, $hProg, $cmdOK_Stop, $lngTahb_Left, $grp
 
 ;--========== File Names
-Global Const $gstrExeFile = @ScriptDir & "\" & "Bible.exe"
+
 Global Const $gconDB_Folder = "DataFiles"
 
 Global Const $gconDB_Main  = "BibleMan02.bib"
@@ -44,16 +80,14 @@ Global $pstrMenuAttr = 0
 Global $pstrMenuWeight = 400
 
 ;--==========  About Form Golbals
-Global Const $conRevNum  = "2.01"
-Global Const $conRevDate = "يناير 2011"
-Global Const $conRevInfo = "الاصدار الثانى"
+Global Const $conMyName ="aymhenry@hotmail.com"
+Global const $conAndroid = "https://play.google.com/store/apps/details?id=aym.soft.bible"
+Global const $conFaceBook = "https://m.facebook.com/Alengeel2/?ref=bookmarks"
+Global const $conWebSite = "https://sites.google.com/view/alengeel/"
+Global const $conWebDownload = "https://drive.google.com/file/d/1odXVTiY-2T0_4OhJG7KfOD6Eq3SyH6tk/view?usp=sharing"
 
 Global Const $gconProgName ="الكتاب المقدس"
 Global Const $gconProgNameBigName ="كِتَابٌ كُلِّ الْعُصُورِ - الْكِتَابِ الْمُقَدَّسِ"
-
-Global Const $conMyName ="AymHenry@hotmail.com"
-Global const $conWebSite = "http://my.opera.com/aymhenry/"
-Global const $conWebDownload = "http://www.4shared.com/file/112953701/17b9f2a1/Bible39.htm"
 
 ;--=========  General Used Vars
 Global Const $conMirrorR2L = 0x100000;0x180000
@@ -91,3 +125,12 @@ Global Const $conStatusMain = "الانجيل بالتشكيل - التفسير 
 ;Global Const $conSatusTash = "الاصحاح لا يحتوى على تشكيل للحروف"
 Global Const $conEndHTML = "</body></html>"
 
+;---------------------------------------------------------------------------------------------------------------------------
+Func ChrTach ($strASC)
+	Local $nCnt, $strChrs
+	for $nCnt = 1 to Stringlen($strASC) step 3
+		$strChrs = $strChrs & Chrw(Dec( "006" &   StringMid($strASC, $nCnt ,2)  ) )
+
+	Next
+	Return $strChrs
+EndFunc

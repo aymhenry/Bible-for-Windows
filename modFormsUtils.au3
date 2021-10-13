@@ -47,8 +47,13 @@ Func formExStyle ( $lngStyle = 0)
 	Return BitOR ( $WS_EX_DLGMODALFRAME, $WS_EX_WINDOWEDGE, $WS_EX_LAYOUTRTL, $lngStyle)
 EndFunc
 ;----------------------------------------------------------------------------------------------------------------
-Func cmdChkUpdate_Start ()
-	StartupForm ("cmdChkUpdate_Click", $frmChkProg)
+Func cmdFacebook_Start ()
+	;StartupForm ("cmdChkUpdate_Click", $frmChkProg)
+    _IECreate ($conFaceBook, 0,1,0,0)
+EndFunc
+
+Func cmdAndroid_Start ()
+    _IECreate ($conAndroid, 0,1,0,0)
 EndFunc
 ;----------------------------------------------------------------------------------------------------------------
 Func cmdSearch_Start ()
@@ -231,14 +236,9 @@ Func cmdOfcPage_Start ()
 EndFunc
 
 ;----------------------------------------------------------------------------------------------------------------
-Func cmdWrtComment_Start ()
-	 ;_IECreate ("http://my.opera.com/aymhenry/blog/http-www-4shared-com-file-112953701-17b9f2a1-bible39-htm#comments", 0,1,0,0)
-	 _IECreate ("http://my.opera.com/aymhenry/blog/bible", 0,1,0,0)
-EndFunc
-
-;----------------------------------------------------------------------------------------------------------------
 Func cmdHelpPage_Start ()
-	 _IECreate ("http://www.4shared.com/document/_OCNmi__/____.html", 0,1,0,0)
+	 ;_IECreate ("http://www.4shared.com/document/_OCNmi__/____.html", 0,1,0,0)
+	 _IECreate ($conWebSite, 0,1,0,0)
 EndFunc
 ;----------------------------------------------------------------------------------------------------------------
 Func ChkIfValid ( $lngBib,  $lngChp,  $LngAFr, $LngATo)
