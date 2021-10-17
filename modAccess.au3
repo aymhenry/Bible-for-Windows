@@ -29,11 +29,16 @@ Func ChptrRead ($strBibleNumber, $lngChptrNo, $lngAyaFrom, $lngAyaTo, $lngAdd, _
 				$strHtmlAdd1="", $strHtmlAdd2="" )
 	const $conSpanClose ="</span>"
 	Local $strSQL
-			If (0 + $strBibleNumber = 0)  or (0+$lngChptrNo=0)  or $strBibleNumber > $conItem then
-					MsgBox ( 16 + 0x40000 , $gconProgName,"modAccess: Error 01-Access Bible " & $strBibleNumber & "- chptr " & $lngChptrNo )
-					$strBibleNumber = $conStartID
-					$lngChptrNo = 1
-			endif
+    If (0 + $strBibleNumber = 0) or $strBibleNumber > $conItem then
+            MsgBox ( 16 + 0x40000 , $gconProgName,"modAccess: Error 01-Access Bible " & $strBibleNumber & "- chptr " & $lngChptrNo )
+            $strBibleNumber = $conStartID
+            ;$lngChptrNo = 1
+    endif
+    
+    If  (0+$lngChptrNo=0) then
+        $lngChptrNo = 1
+    EndIf
+
 		;SELECT tblBible.*, tblHeaders.hedHeaderMain, tblHeaders.hedHeaderSub
 		;FROM tblBible LEFT JOIN tblHeaders ON (tblBible.bibSectionNo = tblHeaders.hedSectionNo) AND (tblBible.bibChptrNo = tblHeaders.hedChptrNo) AND (tblBible.bibBibleCode = tblHeaders.hedBibleCode);
 	if CurAdd() = 0 then ; without add
@@ -86,14 +91,16 @@ Func ChptrRead ($strBibleNumber, $lngChptrNo, $lngAyaFrom, $lngAyaTo, $lngAdd, _
 		endif
 
 		While .Eof <> -1
+            
 			if CurAdd() =1 Then ; with header
 				$strHeaderSub = .Fields("hedHeaderSub").Value
-				if $strHeaderSub = "" Then
+				if StringLen($strHeaderSub) = 0 Then                
 					$bHeaderFound = 0
 				Else
 					$strHeaderMain = .Fields("hedHeaderMain").Value
 					$bHeaderFound = 1
 				EndIf
+                ;msgbox (0, "aym found bHeaderFound =" & $bHeaderFound, $strHeader)                 
 			Else
 				$bHeaderFound =0
 			EndIf
@@ -105,8 +112,10 @@ Func ChptrRead ($strBibleNumber, $lngChptrNo, $lngAyaFrom, $lngAyaTo, $lngAdd, _
 					if $strHeaderMain <> "" Then
 						$strHeader =  "<br>" &  $strHtmlAdd1 & Num2India ($strHeaderMain) & $conSpanClose &  $strHeader
 					endif
+                    
 				Else
 					$strHeader = ""
+                
 				EndIf
 
 				if CurNum () = 1	then ; num $a_Settings [1] ; with num
@@ -388,20 +397,25 @@ Func WordClr ($strText, $strTach, $Words, $AllWords = 0)
 
 	Return $strText
 EndFunc
+
 ;---------------------------------------------------------------------------------------------------------
 Func CalcMaxAya2Chpt ($lngBible = 1, $lngChapter = 1)
 	Local $lngNumber, $recRecset, $strSQL
 	$lngBible =	$lngBible + 0
 	$lngChapter = $lngChapter + 0
 
-	$strSQL = "SELECT Max(bibSectionNo) AS MaxOfbibSectionNo FROM tblBible " & _
-					"GROUP BY bibBibleCode, bibChptrNo " & _
-					"HAVING ((bibBibleCode=" & $lngBible & ") AND (bibChptrNo)=" & $lngChapter & ");"
-
-	if $lngBible = 0 or $lngChapter = 0 Then
+	if $lngBible = 0 Then
 			MsgBox ($conMirrorR2L + 16, $gconProgName,"modAccess: Error 04-Call Bad parameters " & $lngBible & "-" & $lngChapter  )
 			Return 0
 	EndIf
+    
+	if $lngChapter = 0 Then
+			$lngChapter = 1
+	EndIf
+    
+	$strSQL = "SELECT Max(bibSectionNo) AS MaxOfbibSectionNo FROM tblBible " & _
+					"GROUP BY bibBibleCode, bibChptrNo " & _
+					"HAVING ((bibBibleCode=" & $lngBible & ") AND (bibChptrNo)=" & $lngChapter & ");"
 
 	;	$recRecset =  $objMyDB.OpenRecordset ($strSQL)
 	If False =  OpenRecordSet ($objMyDB, _

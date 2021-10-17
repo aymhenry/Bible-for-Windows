@@ -219,6 +219,7 @@ Func ShowBible ( $strItem) ; two char per number
 	;ConsoleWrite ($strItem & " Read ----------------- $nAdd=" & $nAdd & " $nCont=" & $nCont & " CurNum=" & $nNum & " $nTach=" & $nTach & @CR)
 	;ConsoleWrite ($strItem & " Read ----------------- $nAdd=" & $nAdd & " CurAdd=" & CurAdd() & @CR)
 	;------
+    
 	UpdateTxt ()
 
 EndFunc

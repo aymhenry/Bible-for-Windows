@@ -846,7 +846,7 @@ Func _WinAPI_PrivateExtractIcon2($sIcon, $iIndex, $iWidth, $iHeight)
 
 
     If (@error) Or ($Ret[0] = 0) Then
-        MsgBox (0,"Error01 $sIcon= ",$sIcon)
+        ;MsgBox (0,"Error01 $sIcon= ",$sIcon)
         Return SetError(1, 0, 0)
     EndIf
 
@@ -908,7 +908,6 @@ Func MenuCOMMAND($lngCommand)
 		ReadBible (Default, $lngCommand -$mnc2SubMenu3Start  + 1)
 		;CurChptr ($lngCommand -$mnc2SubMenu3Start  + 1)
 
-		;UpdateTxt ()
 		Return 1
 	EndIf
 	;----

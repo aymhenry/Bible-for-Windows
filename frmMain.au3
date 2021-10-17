@@ -247,6 +247,7 @@ Func _Main()
 		EndIf
 
 		$plng_CurrTabNo = $plng_BibleDef
+
 		UpdateTxt()
 
 		SetStatusICONs ()

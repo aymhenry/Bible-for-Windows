@@ -158,7 +158,7 @@ Func ReadSettings ()
 	Local $nAllSet, $nAdd, $nCont, $nNum, $nTach ;CurCont () + 2* CurNum () + 4* CurTach () + 8*CurAdd()
 
 	Local $iCount, $aArray
-	Local $lngReadData
+	;Local $lngReadData
 	Local $strINI_Setting = FolderFileName ($gconINI_Setting, 1)
 	;===== Display
 		For $iCount = 0 to UBound ($as_SysFont ) - 1

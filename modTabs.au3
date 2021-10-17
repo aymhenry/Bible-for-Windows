@@ -89,6 +89,7 @@ Func Swtch2Tab ($lngTab)
 	$plng_CurrTabNo = $lngTab
 	;ConsoleWrite ("Tab=" & $lngTab & " Id="	& $strPara & @CR)
 	ShowBible ( $strPara)
+    
 EndFunc
 ;--------------------------------------------------------------------------------------------------------
 Func SrchOpenTabs ( $strObj)
@@ -103,9 +104,11 @@ Func SetTabInfoBible ($lngTab)
 		;MsgBox ($conMirrorR2L + 16, $gconProgName,"modTabs Internal Error 002")
 		Return
 	EndIf
+
+     
 	Local $strPara = BAdrs2Hex ( CurBible(), CurChptr (), CurAyaChk (), CurAyaFrom (), CurAyaTo(), _
 							      CurCont () + 2* CurNum () + 4* CurTach () + 8*CurAdd() )
-
+ 
 	$a_hTabObject [ $lngTab] = $conTab_TypeBible & $strPara
 
 EndFunc

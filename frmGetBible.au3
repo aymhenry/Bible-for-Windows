@@ -211,7 +211,7 @@ Func cmdGetBible_Click ()
 						Local $nTab = TabCreate ()
 						SetTabInfoBible ( $nTab )
 						TabSetFous ( $nTab ) ; the new one and write bible in IE
-					Else
+					Else 
 						UpdateTxt()
 					EndIf
 
@@ -227,12 +227,16 @@ Func cmdGetBible_Click ()
 					ContinueLoop
 				EndIf
 
-				ApplyChange ()
+				ApplyChange ()  
+
 				if BitAND (GUICtrlRead ( $radNewPage ), $GUI_CHECKED) = 1  Then
 					Local $nTab = TabCreate ()
 					SetTabInfoBible ( $nTab )
+               
 					TabSetFous ( $nTab ) ; the new one and write bible in IE
+ 
 				Else
+
 					UpdateTxt()
 				EndIf
 
@@ -249,8 +253,8 @@ EndFunc
 Func txtChpt_Change ()
 
 		if BitAND (1, $lngExtraFormOpen) = 0 then Return
-
-		$plngChaptr = 0 + GUICtrlRead  ( $txtChptr)
+		;$plngChaptr = 0 + GUICtrlRead ($txtChptr)
+		$plngChaptr = Number(GUICtrlRead ($txtChptr))
 
 		if $plngChaptr > $lngMaxChpLocal Then
 			GUICtrlSetData ($txtChptr, $lngMaxChpLocal)
@@ -293,9 +297,9 @@ Func cmbBible_Change ()
 
 		$plngBible = _ArraySearch($avArray, $strItem, 0, 0, 0, 1)
 
-		If @error  or $plngBible > $conItem or $plngBible < 0 Then
+		If @error  or $plngBible > $conItem or $plngBible <= 0 Then
 			MsgBox ($conMirrorR2L + 16, $gconProgName,"GetBible: Error 03-Internal Error Bible not found",0, $frmGetBible)
-			$plngBible= 1
+			$plngBible = 1
 		endif
 		$lngMaxChpLocal = GetBibleChpts ($plngBible )
 
@@ -311,8 +315,12 @@ Func cmbBible_Change ()
 EndFunc
 ;---------------------------------------------------------------------------------------------------------------------------
 Func ApplyChange ()
+               
 		CurBible ($plngBible)
 		CurChptr ($plngChaptr)
+        ;MsgBox (0, "ApplyChange", "$plngBible = " & $plngBible & " $plngChaptr =" & $plngChaptr)
+        ;MsgBox (0, "$a_Settings[4]", "Bible = " & $a_Settings[3] & " Chaptr =" & $a_Settings[4])
+   
 
 		CurAyaFrom ( GUICtrlRead ($txtAyaFrom) + 0 )
 		CurAyaTo   ( GUICtrlRead ($txtAyaTo)   + 0 )

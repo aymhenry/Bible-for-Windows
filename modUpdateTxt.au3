@@ -15,25 +15,29 @@ Func CurBible ( $lngVar = Default)
 
 	$a_Settings[3] = $lngVar
 	;$lngMaxValue = 0 + StringRight  ( $acBible[$lngVar], 3 )
+   
 	$lngMaxValue = GetBibleChpts ( $lngVar )
+    
 	Return $temp; error detected $lngVar
 EndFunc
+
 ;---------------------------------------------------------------------------------------------------------------------------
 Func CurChptr ( $lngVar = Default)
 	Local $temp = 0
 	if $lngVar = Default Then Return $a_Settings[4]
 
-	If $lngVar < 0  Then
+	if $lngVar < 1 Then
 		$lngVar = 1
-		$temp = 2
+		$temp = 1
 	EndIf
 
-	If  $lngVar > $lngMaxValue Then
-		$lngVar = $lngMaxValue
-		$temp = 2
+	If $lngVar > $lngMaxValue Then
+		$lngVar = $lngMaxValue 
+		$temp = 1
 	EndIf
 
 	$a_Settings[4] = $lngVar
+	
 	$lngMaxAya = CalcMaxAya2Chpt ($a_Settings[3], $a_Settings[4])
 	Return $temp; error detected $lngVar
 EndFunc
@@ -42,7 +46,7 @@ Func CurAyaFrom ( $lngVar = Default)
 	Local $temp = 0
 	if $lngVar = Default Then Return $a_Settings[6]
 
-	If $lngVar < 0  Then
+	If $lngVar <= 0  Then
 		$lngVar = 1
 		$temp = 8
 	EndIf
@@ -64,7 +68,7 @@ Func CurAyaTo ( $lngVar = Default)
 	;	$temp = 16
 	;EndIf
 
-	If $lngVar < 0 or $lngVar < CurAyaFrom() Then
+	If $lngVar <= 0 or $lngVar < CurAyaFrom() Then
 		$lngVar = CurAyaFrom()
 		$temp = 16
 	EndIf
@@ -89,7 +93,7 @@ Func CurAyaChk ( $lngVar = Default  )
 ;		$temp = 4
 ;	EndIf
 
-	If $lngVar < 0  Then
+	If $lngVar <= 0  Then
 		$lngVar = 1
 		$temp = 4
 	EndIf
@@ -129,36 +133,38 @@ EndFunc
 ;---------------------------------------------------------------------------------------------------------------------------
 Func ChkFixAya ()
 	Local $isError
-	$isError = CurBible ($a_Settings [3])   ; value of $a_setting is fixed also
+    
+    ;-- Chk bible    
+    $isError = CurBible ($a_Settings [3])   ; value of $a_setting is fixed also
+    if $isError <> 0 Then
+        CurBible (1) 
+        CurChptr (1) ; -100 get defalut, adjust other values
+        ;CurAyaChk (-100)
+        CurAyaFrom (1) ; -100
+        CurAyaTo (1000)
 
-		if $isError <> 0 Then
-			CurChptr (1) ; -100 get defalut, adjust other values
-			;CurAyaChk (-100)
-			CurAyaFrom (1) ; -100
-			CurAyaTo (1000)
+        Return $isError
+    EndIf
 
-			Return $isError
-		EndIf
+    ;-- Chk chapter
+    $isError =  CurChptr ( $a_Settings[4]) ;Then $isError = 1
+    if $isError < 0 Then
+        ;CurAyaChk (-100);-100
+        CurAyaFrom (1);-100
+        CurAyaTo (1000);-100
 
-	;-- Chk chapter
-	$isError =  CurChptr ( $a_Settings[4]) ;Then $isError = 1
-		if $isError <> 0 Then
-			;CurAyaChk (-100);-100
-			CurAyaFrom (1);-100
-			CurAyaTo (1000);-100
-
-			Return $isError
-		EndIf
+        Return $isError
+    EndIf
 
 	;-- Chk Aya
-		If $a_Settings [5] >= 1 then
-			$isError = CurAyaChk ($a_Settings [5])
-		EndIf
+    If $a_Settings [5] >= 1 then
+        $isError = CurAyaChk ($a_Settings [5])
+    EndIf
 
-		$isError +=  CurAyaFrom ( $a_Settings[6])
-		$isError +=  CurAyaTo ( $a_Settings[7])
+    $isError +=  CurAyaFrom ( $a_Settings[6])
+    $isError +=  CurAyaTo ( $a_Settings[7])
 
-		Return $isError
+    Return $isError
 
 EndFunc
 ;---------------------------------------------------------------------------------------------------------
@@ -189,6 +195,7 @@ Func UpdateTxt ()
 	Local $lngFrom, $LngTO
 
 	; safety steps
+	; safety steps
 
 	$isError = ChkFixAya () ; fix any error
 	;if $isError <> 0 Then
@@ -202,6 +209,7 @@ Func UpdateTxt ()
 		$strWords = WordsRead (CurBible(), CurChptr(), CurAyaChk(), 1, 9999 , _
 								"<span class='wrdhead'>", "<span class='wrd'>", "<span class='num'>" )
 	Else
+   
 		$strChars = ChptrRead (CurBible(), CurChptr(), CurAyaFrom(), CurAyaTo(), CurAdd(), _
 							   "<span class='num'>",  "<span class='aya'>", _
 							   "<span class='add1'>", "<span class='add2'>")

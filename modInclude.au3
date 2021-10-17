@@ -62,5 +62,5 @@
 	#include <frmGetBible.au3>
 	#include <frmSearch.au3>
 	#include <frmMap.au3>
-	#include <frmChkRevision.au3>
+	;#include <frmChkRevision.au3>
 	#include <frmSort.au3>
