@@ -17,7 +17,19 @@
 - Good and fast search on both bible books and Bible dictionary.
 - Application made on 2011, Android version is available.
 
+## Download App from this site.
 
+Add the following file and folder in same folder in your computer, double click bible. No setup required.
+
+- File 
+
+   [Bible.exe]: https://github.com/aymhenry/Bible-for-Windows/blob/main/Bible.exe
+
+- and data folder name 
+
+   [DataFiles]: https://github.com/aymhenry/Bible-for-Windows/tree/main/DataFiles
+
+   
 
 ## Download link - Windows App
 
