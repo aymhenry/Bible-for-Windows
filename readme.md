@@ -21,13 +21,9 @@
 
 Add the following file and folder in same folder in your computer, double click bible. No setup required.
 
-- File 
+- File    ![Bible.exe]: https://github.com/aymhenry/Bible-for-Windows/blob/main/Bible.exe
 
-   [Bible.exe]: https://github.com/aymhenry/Bible-for-Windows/blob/main/Bible.exe
-
-- and data folder name 
-
-   [DataFiles]: https://github.com/aymhenry/Bible-for-Windows/tree/main/DataFiles
+- and data folder named   ! [DataFiles]: https://github.com/aymhenry/Bible-for-Windows/tree/main/DataFiles
 
    
 
