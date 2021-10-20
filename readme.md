@@ -31,3 +31,4 @@ https://play.google.com/store/apps/details?id=aym.soft.bible
 
 
 
+![](G:\Ayman_APP\Bible\Bible\RevOct21_R21\Bible_win\Bible_App.png)
