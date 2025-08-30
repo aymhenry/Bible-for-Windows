@@ -1,0 +1,31 @@
+# Auth         : Ayman Henry - Aug. 2025
+# ======================================
+# Ignore all Python bytecode
+__pycache__/
+**/*.pyc
+
+readm.md
+
+# Ignore folders
+Info4Data/
+DataFiles/
+
+# password file
+**/*.htpasswd
+# create new file
+# printf "my_user:$(openssl passwd -apr1 'mypassword')\n" | sudo tee -a ./.htpasswd
+
+# Ignore all vscode files & env
+.vscode
+.env
+
+# Ignore all files in current dir, or sub folders
+**/*.log
+
+**/*.pem
+**/*.key
+**/*.crt
+
+**/*.pdf
+**/*.doc
+**/*.docx
